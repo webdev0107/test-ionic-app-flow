@@ -9,7 +9,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "app-build": "ng build; ionic live-update manifest"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +28,7 @@
     "@capacitor/haptics": "5.0.6",
     "@capacitor/ios": "5.5.1",
     "@capacitor/keyboard": "5.0.6",
+    "@capacitor/live-updates": "^0.1.1-beta.4",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
     "@ionic/pwa-elements": "^3.2.2",
