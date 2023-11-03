@@ -43,6 +43,7 @@ export class AppComponent {
     App.addListener('resume', async () => {
       const shouldReloadApp = await Preferences.get({ key: 'shouldReloadApp' });
       if (shouldReloadApp?.value === 'true') {
+        console.log('====upload===');
         this.openModal();
         // await LiveUpdates.reload();
       } else {
