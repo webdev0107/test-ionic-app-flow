@@ -29,6 +29,13 @@ export class AppComponent {
 
     if (role === 'confirm') {
       await LiveUpdates.reload();
+    } else {
+      const result = await LiveUpdates.sync();
+      console.log('result03: ', JSON.stringify(result));
+      await Preferences.set({
+        key: 'shouldReloadApp',
+        value: result.activeApplicationPathChanged.toString()
+      })
     }
   }
 
@@ -36,8 +43,8 @@ export class AppComponent {
     App.addListener('resume', async () => {
       const shouldReloadApp = await Preferences.get({ key: 'shouldReloadApp' });
       if (shouldReloadApp?.value === 'true') {
-        
-        await LiveUpdates.reload();
+        this.openModal();
+        // await LiveUpdates.reload();
       } else {
         const result = await LiveUpdates.sync();
         console.log('result02: ', JSON.stringify(result));
