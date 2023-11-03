@@ -14,7 +14,7 @@ let data: BundleInfo | null = null;
 CapacitorUpdater.notifyAppReady();
 
 App.addListener('appStateChange', async (state: any) => {
-  console.log('appStateChange', state)
+  console.log('appStateChange', JSON.stringify(state))
   if (state.isActive) {
     console.log('getLatest')
     // Do the download during user active app time to prevent failed download
