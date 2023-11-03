@@ -6,11 +6,13 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
+  background-color: blue;
 }
 
 #container strong {
   font-size: 20px;
   line-height: 26px;
+  color: white;
 }
 
 #container p {
@@ -24,4 +26,5 @@
 
 #container a {
   text-decoration: none;
+  color:blueviolet;
 }
