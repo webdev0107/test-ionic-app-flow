@@ -14,9 +14,9 @@ export class AppComponent {
   constructor(
     private modalCtrl: ModalController
   ) {
-    this.initializeApp(
+    // this.initializeApp(
 
-    );
+    // );
   }
 
   async openModal() {
@@ -44,7 +44,6 @@ export class AppComponent {
       const shouldReloadApp = await Preferences.get({ key: 'shouldReloadApp' });
       if (shouldReloadApp?.value === 'true') {
         console.log('====upload===');
-        this.openModal();
         // await LiveUpdates.reload();
       } else {
         const result = await LiveUpdates.sync();
@@ -56,12 +55,14 @@ export class AppComponent {
       }
     });
 
+    this.openModal();
+    
     //First sync on app load
-    const result = await LiveUpdates.sync();
-    console.log('result01: ', JSON.stringify(result));
-    await Preferences.set({
-      key: 'shouldReloadApp',
-      value: result.activeApplicationPathChanged.toString()
-    })
+    // const result = await LiveUpdates.sync();
+    // console.log('result01: ', JSON.stringify(result));
+    // await Preferences.set({
+    //   key: 'shouldReloadApp',
+    //   value: result.activeApplicationPathChanged.toString()
+    // })
   }
 }

@@ -15,4 +15,113 @@
 
   <app-explore-container name="This is a Home page description Asaojoij sdfoj ajf oiasjfa oajf ojoasfaa"></app-explore-container>
   <p>asofasmmma as fas ojoj aos jaoisj oa  asfoijdfa da</p>
+  
+  <ion-accordion value="grid-manual-update">
+    <ion-item slot="content">
+      <ion-grid id='grid-manual-update'>
+          <ion-row>
+              <ion-col>
+                  <p><a href='https://ionic.io/docs/appflow/deploy/api#reloadapp'>Deploy.reloadApp()</a> can be used with the <a href='https://ionic.io/docs/appflow/deploy/api#checkforupdate'>checkForUpdate()</a>, <a href='https://ionic.io/docs/appflow/deploy/api#downloadupdate'>downloadUpdate()</a>, and <a href='https://ionic.io/docs/appflow/deploy/api#downloadupdate'>extractUpdate()</a> methods to manually push a live update to the app.<p>
+                  <p>In this example, pressing the button will reload the app with the latest available live update.</p>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+              <ion-button (click)='performManualUpdate()'>performManualUpdate()</ion-button>
+              </ion-col>
+              <ion-col>
+              <ion-text color='secondary'>Update status: {{updateStatus}}</ion-text>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-accordion>
+
+  <ion-accordion value="grid-get-configuration">
+    <ion-item slot="content">
+      <ion-grid id='grid-get-configuration'>
+          <ion-row>
+              <ion-col>
+                  <p><a href='https://ionic.io/docs/appflow/deploy/api#getconfiguration'>Deploy.getConfiguration()</a> can be used to get the app's configurations for handling live updates. The information obtained from this method includes, the app id, channel name, and update method associated with the app.</p>
+                  <p>In this example, we demonstrate how this method can be used to obtain the app id.</p>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+              <ion-button (click)='getUpdateConfig()'>getConfiguration()</ion-button>
+              </ion-col>
+              <ion-col>
+              <ion-text color='secondary'>App id: {{appid}}</ion-text>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-accordion>
+
+  <ion-accordion value="grid-get-current-version">
+    <ion-item slot="content">
+      <ion-grid id='grid-get-current-version'>
+          <ion-row>
+              <ion-col>
+              <p><a href='https://ionic.io/docs/appflow/deploy/api#getcurrentversion'>Deploy.getCurrentVersion()</a> can be used to get the id of the live update currently applied to the app</p>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+          <ion-col>
+              <ion-button (click)='getCurrVersion()'>getCurrentVersion()</ion-button>
+          </ion-col>
+          <ion-col>
+              <ion-text color='secondary'>Version: {{versionCurrent}}</ion-text>
+          </ion-col>
+          </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-accordion>
+
+  <ion-accordion value="grid-get-available-version">
+    <ion-item slot="content">
+      <ion-grid id='grid-get-available-version'>
+          <ion-row>
+              <ion-col>
+                  <p><a href='https://ionic.io/docs/appflow/deploy/api#getavailableversions'>Deploy.getAvailableVersions()</a> can be used to get the number of live updates available for the current natvie version of this app</p>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+              <ion-button (click)='onCheckVersions()'>getAvailableVersions()</ion-button>
+              </ion-col>
+              <ion-col>
+              <ion-text color='secondary'>Number of Versions: {{versionsAvailable}}</ion-text>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-accordion>
+
+  <ion-accordion value="grid-configure">
+    <ion-item slot="content">
+      <ion-grid id='grid-configure'>
+          <ion-row>
+              <ion-col>
+                  <p><a href='https://ionic.io/docs/appflow/deploy/api#configure'>Deploy.configure()</a> can be used to specify the app id and channel name that this app will use to check for updates.<p>
+                  <p>In this example, the Live Update Channel can be changed by entering a new channel name in the input below.</p>
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-item>
+              <ion-label position="stacked">Live Update Channel</ion-label>
+              <ion-input type="text" [(ngModel)]="newChannel" text-right id="inputNewChannel" placeholder="Production" ></ion-input>
+              </ion-item>
+          </ion-row>
+          <ion-row>
+              <ion-col>
+              <ion-button (click)='configureDeploy()'>configure()</ion-button>
+              </ion-col>
+              <ion-col>
+              <ion-text color='secondary'>Channel: {{channelCurrent}}</ion-text>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-accordion>
 </ion-content>
