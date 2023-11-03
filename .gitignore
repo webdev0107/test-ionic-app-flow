@@ -68,3 +68,5 @@ testem.log
 Thumbs.db
 /resources
 config.xml
+
+.capgo_key

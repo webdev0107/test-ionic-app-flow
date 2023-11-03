@@ -5,6 +5,10 @@ import '@angular/compiler';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import { CapacitorUpdater } from '@capgo/capacitor-updater';
+
+CapacitorUpdater.notifyAppReady();
+
 
 defineCustomElements(window);
 
