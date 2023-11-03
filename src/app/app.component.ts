@@ -21,11 +21,11 @@ export class AppComponent {
   constructor(
     private modalCtrl: ModalController
   ) {
-    CapacitorUpdater.notifyAppReady()
+    // CapacitorUpdater.notifyAppReady()
 
-    this.initializeApp(
+    // this.initializeApp(
 
-    );
+    // );
   }
 
   // async openModal() {
@@ -76,51 +76,6 @@ export class AppComponent {
   // }
 
   async initializeApp() {
-    App.addListener('appStateChange', async (state: any) => {
-      console.log('appStateChange', state)
-      if (state.isActive) {
-        console.log('getLatest')
-        // Do the download during user active app time to prevent failed download
-        const latest = await CapacitorUpdater.getLatest()
-        console.log('latest', latest)
-        if (latest.url) {
-          this.data = await CapacitorUpdater.download({
-            url: latest.url,
-            version: latest.version,
-          })
-          console.log('download', this.data)
-        }
-      }
-      if (!state.isActive && this.data) {
-        console.log('set')
-        // Do the switch when user leave app or when you want
-        SplashScreen.show()
-        try {
-          await CapacitorUpdater.set({ id: this.data.id })
-        }
-        catch (err) {
-          console.log(err)
-          SplashScreen.hide() // in case the set fail, otherwise the new app will have to hide it
-        }
-      }
-    })
-
-    CapacitorUpdater.addListener('updateAvailable', async (res) => {
-      try {
-        const { value } = await Dialog.confirm({
-          title: 'Update Available',
-          message: `Version ${res.bundle.version} is available. Would you like to update now?`,
-        })
     
-        if (value)
-          CapacitorUpdater.set(res.bundle)
-    
-      }
-      catch (error) {
-        console.log(error)
-      }
-    })
-    
-    CapacitorUpdater.notifyAppReady()
   }
 }
