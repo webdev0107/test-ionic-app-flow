@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-// import { Deploy, DeployClass } from 'cordova-plugin-ionic';
-import { Deploy } from 'cordova-plugin-ionic/dist/ngx';
+import { Deploy } from 'cordova-plugin-ionic';
+// import { Deploy } from 'cordova-plugin-ionic/dist/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -18,24 +18,24 @@ export class Tab1Page {
   channelCurrent: string = 'Production';
 
   constructor(
-    private _deploy: Deploy
+    // private _deploy: Deploy
   ) {}
   
   async performManualUpdate() {
     this.updateStatus = 'Checking for Update';
-    const update = await this._deploy.checkForUpdate()
+    const update = await Deploy.checkForUpdate()
     if (update.available){
       this.updateStatus = 'Update found. Downloading update';
-      await this._deploy.downloadUpdate((progress) => {
+      await Deploy.downloadUpdate((progress) => {
         console.log(progress);
       })
       this.updateStatus = 'Update downloaded. Extracting update';
-      await this._deploy.extractUpdate((progress) => {
+      await Deploy.extractUpdate((progress) => {
         console.log(progress);
       })
       console.log('Reloading app');
       this.updateStatus = 'Update extracted. Reloading app';
-      await this._deploy.reloadApp();
+      await Deploy.reloadApp();
     } else {
       console.log('No update available');
       this.updateStatus = 'No update available';
@@ -43,14 +43,14 @@ export class Tab1Page {
   }
 
   async getUpdateConfig() {
-    const info = (await this._deploy.getConfiguration()).appId;
+    const info = (await Deploy.getConfiguration()).appId;
     this.appid = info;
-    const version = (await this._deploy.getConfiguration()).binaryVersionCode;
+    const version = (await Deploy.getConfiguration()).binaryVersionCode;
     this.binaryVersionCode = version;
   }
 
   async getCurrVersion() {
-    let versionCurrent = (await this._deploy.getCurrentVersion());
+    let versionCurrent = (await Deploy.getCurrentVersion());
     if (versionCurrent) {
       this.versionCurrent = versionCurrent.versionId;
       this.buildId = versionCurrent.buildId;
@@ -61,7 +61,7 @@ export class Tab1Page {
   }
 
   async onCheckVersions() {
-    const versions = await this._deploy.getAvailableVersions();
+    const versions = await Deploy.getAvailableVersions();
     if (versions.length > 0) {
       this.versionsAvailable = versions.length.toString();
     } else {
@@ -70,21 +70,21 @@ export class Tab1Page {
   }
 
   // async onCheckVersions() {
-  //   const versions = await this._deploy.getAvailableVersions();
+  //   const versions = await Deploy.getAvailableVersions();
   //   if (versions.length) {
-  //          this._deploy.deleteVersionById(versions[0].versionId);
+  //          Deploy.deleteVersionById(versions[0].versionId);
   //   } else {
   //          console.log("No live update versions to delete");
   //   }
   // }
 
   async configureDeploy() {
-    let appid = (await this._deploy.getConfiguration()).appId;
+    let appid = (await Deploy.getConfiguration()).appId;
     const config = {
       'appId': appid,
       'channel': this.newChannel
     }
-    await this._deploy.configure(config);
-    this.channelCurrent = (await this._deploy.getConfiguration()).channel;
+    await Deploy.configure(config);
+    this.channelCurrent = (await Deploy.getConfiguration()).channel;
   }
 }

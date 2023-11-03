@@ -19,50 +19,50 @@ export class AppComponent {
     // );
   }
 
-  async openModal() {
-    const modal = await this.modalCtrl.create({
-      component: UpdateModalComponent,
-    });
-    modal.present();
+  // async openModal() {
+  //   const modal = await this.modalCtrl.create({
+  //     component: UpdateModalComponent,
+  //   });
+  //   modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+  //   const { data, role } = await modal.onWillDismiss();
 
-    if (role === 'confirm') {
-      await LiveUpdates.reload();
-    } else {
-      const result = await LiveUpdates.sync();
-      console.log('result03: ', JSON.stringify(result));
-      await Preferences.set({
-        key: 'shouldReloadApp',
-        value: result.activeApplicationPathChanged.toString()
-      })
-    }
-  }
+  //   if (role === 'confirm') {
+  //     await LiveUpdates.reload();
+  //   } else {
+  //     const result = await LiveUpdates.sync();
+  //     console.log('result03: ', JSON.stringify(result));
+  //     await Preferences.set({
+  //       key: 'shouldReloadApp',
+  //       value: result.activeApplicationPathChanged.toString()
+  //     })
+  //   }
+  // }
 
-  async initializeApp() {
-    App.addListener('resume', async () => {
-      const shouldReloadApp = await Preferences.get({ key: 'shouldReloadApp' });
-      if (shouldReloadApp?.value === 'true') {
-        console.log('====upload===');
-        // await LiveUpdates.reload();
-      } else {
-        const result = await LiveUpdates.sync();
-        console.log('result02: ', JSON.stringify(result));
-        await Preferences.set({
-          key: 'shouldReloadApp',
-          value: result.activeApplicationPathChanged.toString()
-        })
-      }
-    });
+  // async initializeApp() {
+  //   App.addListener('resume', async () => {
+  //     const shouldReloadApp = await Preferences.get({ key: 'shouldReloadApp' });
+  //     if (shouldReloadApp?.value === 'true') {
+  //       console.log('====upload===');
+  //       // await LiveUpdates.reload();
+  //     } else {
+  //       const result = await LiveUpdates.sync();
+  //       console.log('result02: ', JSON.stringify(result));
+  //       await Preferences.set({
+  //         key: 'shouldReloadApp',
+  //         value: result.activeApplicationPathChanged.toString()
+  //       })
+  //     }
+  //   });
 
-    this.openModal();
+  //   this.openModal();
     
-    //First sync on app load
-    // const result = await LiveUpdates.sync();
-    // console.log('result01: ', JSON.stringify(result));
-    // await Preferences.set({
-    //   key: 'shouldReloadApp',
-    //   value: result.activeApplicationPathChanged.toString()
-    // })
-  }
+  //   //First sync on app load
+  //   // const result = await LiveUpdates.sync();
+  //   // console.log('result01: ', JSON.stringify(result));
+  //   // await Preferences.set({
+  //   //   key: 'shouldReloadApp',
+  //   //   value: result.activeApplicationPathChanged.toString()
+  //   // })
+  // }
 }
