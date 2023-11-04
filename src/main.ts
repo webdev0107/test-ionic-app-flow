@@ -43,6 +43,8 @@ CapacitorUpdater.notifyAppReady();
 // })
 
 CapacitorUpdater.addListener('updateAvailable', async (res) => {
+  console.log('==update available==');
+  console.log('res-update: ', JSON.stringify(res));
   try {
     const { value } = await Dialog.confirm({
       title: 'Update Available',
