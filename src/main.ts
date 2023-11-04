@@ -29,7 +29,7 @@ App.addListener('appStateChange', async (state: any) => {
       
       if (value && latest.url) {
         console.log('=== download start===');
-        SplashScreen.show();
+        // SplashScreen.show();
         data = await CapacitorUpdater.download({
           url: latest?.url,
           version: latest?.version,
