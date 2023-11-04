@@ -11,57 +11,64 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Dialog } from '@capacitor/dialog';
 
 let data: BundleInfo | null = null;
-// CapacitorUpdater.notifyAppReady();
+CapacitorUpdater.notifyAppReady();
 
-// App.addListener('appStateChange', async (state: any) => {
-//   console.log('appStateChange', JSON.stringify(state))
-//   if (state.isActive) {
-//     console.log('getLatest')
-//     // Do the download during user active app time to prevent failed download
-//     const latest = await CapacitorUpdater.getLatest()
-//     console.log('latest', JSON.stringify(latest))
-//     if (latest.url) {
-//       data = await CapacitorUpdater.download({
-//         url: latest.url,
-//         version: latest.version,
-//       })
-//       console.log('download', data)
-//     }
-//   }
-//   if (!state.isActive && data) {
-//     console.log('set')
-//     // Do the switch when user leave app or when you want
-//     SplashScreen.show()
-//     try {
-//       await CapacitorUpdater.set({ id: data.id })
-//     }
-//     catch (err) {
-//       console.log(err)
-//       SplashScreen.hide() // in case the set fail, otherwise the new app will have to hide it
-//     }
-//   }
-// })
-
-CapacitorUpdater.addListener('updateAvailable', async (res) => {
-  console.log('==update available==');
-  console.log('res-update: ', JSON.stringify(res));
-  try {
+App.addListener('appStateChange', async (state: any) => {
+  console.log('appStateChange', JSON.stringify(state))
+  if (state.isActive) {
+    console.log('getLatest')
+    // Do the download during user active app time to prevent failed download
+    const latest = await CapacitorUpdater.getLatest();
+    console.log('latest', JSON.stringify(latest))
     const { value } = await Dialog.confirm({
       title: 'Update Available',
-      message: `Version ${res.bundle.version} is available. Would you like to update now?`,
+      message: `Version ${latest.version} is available. Would you like to update now?`,
     })
     console.log('value: ', value);
-
-    if (value)
-      CapacitorUpdater.set(res.bundle)
-
+    
+    if (value && latest.url) {
+      data = await CapacitorUpdater.download({
+        url: latest.url,
+        version: latest.version,
+      })
+      console.log('download', JSON.stringify(data));
+      CapacitorUpdater.set({ id: data.id })
+    }
   }
-  catch (error) {
-    console.log(error)
+  if (!state.isActive && data) {
+    console.log('set')
+    // Do the switch when user leave app or when you want
+    SplashScreen.show()
+    try {
+      await CapacitorUpdater.set({ id: data.id })
+    }
+    catch (err) {
+      console.log(err)
+      SplashScreen.hide() // in case the set fail, otherwise the new app will have to hide it
+    }
   }
 })
 
-CapacitorUpdater.notifyAppReady()
+// CapacitorUpdater.addListener('updateAvailable', async (res) => {
+//   console.log('==update available==');
+//   console.log('res-update: ', JSON.stringify(res));
+//   try {
+//     const { value } = await Dialog.confirm({
+//       title: 'Update Available',
+//       message: `Version ${res.bundle.version} is available. Would you like to update now?`,
+//     })
+//     console.log('value: ', value);
+
+//     if (value)
+//       CapacitorUpdater.set(res.bundle)
+
+//   }
+//   catch (error) {
+//     console.log(error)
+//   }
+// })
+
+// CapacitorUpdater.notifyAppReady()
 
 defineCustomElements(window);
 
