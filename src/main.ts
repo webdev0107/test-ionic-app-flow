@@ -27,11 +27,13 @@ App.addListener('appStateChange', async (state: any) => {
     console.log('value: ', value);
     
     if (value && latest.url) {
+      console.log('=== download start===');
       data = await CapacitorUpdater.download({
         url: latest.url,
         version: latest.version,
       })
       console.log('download', JSON.stringify(data));
+      console.log('=== download end===');
       CapacitorUpdater.set({ id: data.id })
     }
   }
