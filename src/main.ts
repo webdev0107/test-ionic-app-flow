@@ -13,34 +13,34 @@ import { Dialog } from '@capacitor/dialog';
 let data: BundleInfo | null = null;
 CapacitorUpdater.notifyAppReady();
 
-App.addListener('appStateChange', async (state: any) => {
-  console.log('appStateChange', JSON.stringify(state))
-  if (state.isActive) {
-    console.log('getLatest')
-    // Do the download during user active app time to prevent failed download
-    const latest = await CapacitorUpdater.getLatest()
-    console.log('latest', latest)
-    if (latest.url) {
-      data = await CapacitorUpdater.download({
-        url: latest.url,
-        version: latest.version,
-      })
-      console.log('download', data)
-    }
-  }
-  if (!state.isActive && data) {
-    console.log('set')
-    // Do the switch when user leave app or when you want
-    SplashScreen.show()
-    try {
-      await CapacitorUpdater.set({ id: data.id })
-    }
-    catch (err) {
-      console.log(err)
-      SplashScreen.hide() // in case the set fail, otherwise the new app will have to hide it
-    }
-  }
-})
+// App.addListener('appStateChange', async (state: any) => {
+//   console.log('appStateChange', JSON.stringify(state))
+//   if (state.isActive) {
+//     console.log('getLatest')
+//     // Do the download during user active app time to prevent failed download
+//     const latest = await CapacitorUpdater.getLatest()
+//     console.log('latest', JSON.stringify(latest))
+//     if (latest.url) {
+//       data = await CapacitorUpdater.download({
+//         url: latest.url,
+//         version: latest.version,
+//       })
+//       console.log('download', data)
+//     }
+//   }
+//   if (!state.isActive && data) {
+//     console.log('set')
+//     // Do the switch when user leave app or when you want
+//     SplashScreen.show()
+//     try {
+//       await CapacitorUpdater.set({ id: data.id })
+//     }
+//     catch (err) {
+//       console.log(err)
+//       SplashScreen.hide() // in case the set fail, otherwise the new app will have to hide it
+//     }
+//   }
+// })
 
 CapacitorUpdater.addListener('updateAvailable', async (res) => {
   try {
@@ -58,7 +58,7 @@ CapacitorUpdater.addListener('updateAvailable', async (res) => {
   }
 })
 
-CapacitorUpdater.notifyAppReady()
+// CapacitorUpdater.notifyAppReady()
 
 defineCustomElements(window);
 
