@@ -11,7 +11,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Dialog } from '@capacitor/dialog';
 
 let data: BundleInfo | null = null;
-CapacitorUpdater.notifyAppReady();
+// CapacitorUpdater.notifyAppReady();
 
 // App.addListener('appStateChange', async (state: any) => {
 //   console.log('appStateChange', JSON.stringify(state))
@@ -50,6 +50,7 @@ CapacitorUpdater.addListener('updateAvailable', async (res) => {
       title: 'Update Available',
       message: `Version ${res.bundle.version} is available. Would you like to update now?`,
     })
+    console.log('value: ', value);
 
     if (value)
       CapacitorUpdater.set(res.bundle)
@@ -60,7 +61,7 @@ CapacitorUpdater.addListener('updateAvailable', async (res) => {
   }
 })
 
-// CapacitorUpdater.notifyAppReady()
+CapacitorUpdater.notifyAppReady()
 
 defineCustomElements(window);
 
