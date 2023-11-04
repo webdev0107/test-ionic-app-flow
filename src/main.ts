@@ -30,9 +30,10 @@ App.addListener('appStateChange', async (state: any) => {
       if (value && latest.url) {
         console.log('=== download start===');
         data = await CapacitorUpdater.download({
-          // url: latest.url,
-          // version: latest.version,
-          ...latest
+          url: latest?.url,
+          version: latest?.version,
+          sessionKey: latest?.sessionKey || '',
+          // checksum?: latest?.checksum || '';
         })
         console.log('=== download end===');
         console.log('download', JSON.stringify(data));
