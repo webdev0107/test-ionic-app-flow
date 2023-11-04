@@ -18,23 +18,29 @@ App.addListener('appStateChange', async (state: any) => {
   if (state.isActive) {
     console.log('getLatest')
     // Do the download during user active app time to prevent failed download
-    const latest = await CapacitorUpdater.getLatest();
-    console.log('latest', JSON.stringify(latest))
-    const { value } = await Dialog.confirm({
-      title: 'Update Available',
-      message: `Version ${latest.version} is available. Would you like to update now?`,
-    })
-    console.log('value: ', value);
-    
-    if (value && latest.url) {
-      console.log('=== download start===');
-      data = await CapacitorUpdater.download({
-        url: latest.url,
-        version: latest.version,
+    try {
+      const latest = await CapacitorUpdater.getLatest();
+      console.log('latest', JSON.stringify(latest))
+      const { value } = await Dialog.confirm({
+        title: 'Update Available',
+        message: `Version ${latest.version} is available. Would you like to update now?`,
       })
-      console.log('download', JSON.stringify(data));
-      console.log('=== download end===');
-      CapacitorUpdater.set({ id: data.id })
+      console.log('value: ', value);
+      
+      if (value && latest.url) {
+        console.log('=== download start===');
+        data = await CapacitorUpdater.download({
+          // url: latest.url,
+          // version: latest.version,
+          ...latest
+        })
+        console.log('=== download end===');
+        console.log('download', JSON.stringify(data));
+        CapacitorUpdater.set({ id: data.id })
+      }
+    } 
+    catch (err) {
+      console.log('err: ', JSON.stringify(err));
     }
   }
   if (!state.isActive && data) {
